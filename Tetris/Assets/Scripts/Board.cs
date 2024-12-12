@@ -6,10 +6,11 @@ public class Board : MonoBehaviour
 {
     public Tilemap tilemap {get; private set;}
     public Piece activepiece {get; private set;}
+    public Pause_Menu pauseMenu {get; private set;}
     public TetrominoData[] tetrominoes;
     public Vector3Int spawnPosition;
     public Vector2Int boardSize = new Vector2Int(10,20);
-
+    public bool dead = false; 
     public RectInt Bounds
     {
         get
@@ -23,6 +24,7 @@ public class Board : MonoBehaviour
     {
         this.tilemap = GetComponentInChildren<Tilemap>();
         this.activepiece = GetComponentInChildren<Piece>();
+        this.pauseMenu = GetComponentInChildren<Pause_Menu>();
 
         for (int i=0; i < this.tetrominoes.Length; i++ )
         {
@@ -42,6 +44,12 @@ public class Board : MonoBehaviour
 
         this.activepiece.Initialize(this, this.spawnPosition, data);
 
+        pauseMenu = FindFirstObjectByType<Pause_Menu>();
+    if (pauseMenu != null)
+    {
+        pauseMenu.Initialize(this);
+    }
+
         if (IsValidPosition(this.activepiece, this.spawnPosition))
         {
             Set(this.activepiece);
@@ -56,6 +64,7 @@ public class Board : MonoBehaviour
 
     private void GameOver()
     {
+        dead = true;
         this.tilemap.ClearAllTiles();
     }
 
