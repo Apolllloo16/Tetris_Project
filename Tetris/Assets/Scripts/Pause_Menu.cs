@@ -36,10 +36,12 @@ public class Pause_Menu : MonoBehaviour
 
     public void GameEnd()
     {
-        DeathMenuCanvas.SetActive(true);
-        Time.timeScale = 0f;
-        paused = true;
-        board.dead = false;
+        if (!DeathMenuCanvas.activeSelf) // Prevent repeated calls.
+        {
+            DeathMenuCanvas.SetActive(true);
+            Time.timeScale = 0f;
+            paused = true;
+        }
     }
 
     public void Restart()

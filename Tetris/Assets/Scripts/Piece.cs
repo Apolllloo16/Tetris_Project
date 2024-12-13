@@ -43,6 +43,11 @@ public class Piece : MonoBehaviour
 
         this.lockTime += Time.deltaTime;
 
+        if(board.dead)
+        {
+            return;
+        }
+
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
@@ -81,6 +86,12 @@ public class Piece : MonoBehaviour
         }
 
         this.board.Set(this);
+    }
+
+    public void UpdateStepDelay(int level)
+    {
+        stepDelay = Mathf.Max(0.1f, 1.0f - (level - 1) * 0.1f); // Example scaling logic
+        Debug.Log($"Updated Step Delay: {stepDelay}");
     }
 
     private void Step()
