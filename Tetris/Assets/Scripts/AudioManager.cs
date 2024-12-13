@@ -1,4 +1,3 @@
-using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
