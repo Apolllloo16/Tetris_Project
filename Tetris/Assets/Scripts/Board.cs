@@ -25,6 +25,14 @@ public class Board : MonoBehaviour
         get { return (level * linesPerLevel) - linesCleared; }
     }
 
+    public int linesRequiredTillNextLevel
+{
+    
+    
+     get { return (level * linesPerLevel) - linesCleared; }
+    
+}
+
     public RectInt Bounds
     {
         get
@@ -164,10 +172,8 @@ public class Board : MonoBehaviour
         if (linesClearedThisTurn > 0)
         {
             UpdateScore(linesClearedThisTurn);
-            if (linesCleared > (linesTillNextLevel * level))
-            {
-                UpdateLevel();
-            }
+            UpdateLevel();
+            
         }
 
     }
@@ -192,12 +198,15 @@ public class Board : MonoBehaviour
 
     private void UpdateLevel()
     {
-        int newLevel = (this.linesCleared / this.linesPerLevel) + 1;
-        if (newLevel > this.level)
+       int requiredLines = linesPerLevel * level;
+
+    // Check if linesCleared has passed the required threshold for the next level
+        while (linesCleared >= requiredLines)
         {
-            this.level = newLevel;
-            this.activepiece.UpdateStepDelay(this.level); // Update piece speed
+            level++;  // Increase level
+            requiredLines = linesPerLevel * level;  // Update the threshold for the next level
         }
+
     }
 
     private bool IsLineFull(int row)
